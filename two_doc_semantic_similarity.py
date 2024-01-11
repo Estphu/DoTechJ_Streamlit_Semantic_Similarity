@@ -1,6 +1,7 @@
 import streamlit as st # Streamlit Framework Python Pkg
 import PyPDF2 # Pkg for PDF Reader
-from docx import Document # Pkg for Docx Reader
+# from docx import Document # Pkg for Docx Reader
+# import docx2txt # Pkg for conversion docx to txt
 from sentence_transformers import SentenceTransformer # Pkg for converting the extracted texts into vector embeddings
 from annoy import AnnoyIndex # Pkg for storing indexing and embeddings
 from scipy.spatial.distance import cosine # Pkg for calculating semantic similarity between embeddings
@@ -18,16 +19,16 @@ def extract_text_pdf(file):
         return ""
 
 # Function to extract text from a DOC document
-def extract_text_doc(file):
-    try:
-        doc = Document(file)
-        text = ""
-        for paragraph in doc.paragraphs:
-            text += paragraph.text + "\n"
-        return text
-    except FileNotFoundError:
-        st.error(f"File not found: {file.name}")
-        return ''
+# def read_docx(file_path):
+#     doc = Document(file_path)
+#     text = ""
+#     for paragraph in doc.paragraphs:
+#         text += paragraph.text + "\n"
+#     return text
+
+# def read_doc(file_path):
+#     text = docx2txt.process(file_path)
+#     return text
     
 # Function to embed sentence into vector reresentation
 def embed_text(text, model):
@@ -64,8 +65,8 @@ def main():
         # Extracting text from documents
         if uploaded_file1.type == 'application/pdf':
             text1 = extract_text_pdf(uploaded_file1)
-        elif uploaded_file1.type in ['application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']:
-            text1 = extract_text_doc(uploaded_file1)
+        # elif uploaded_file1.type in ['application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']:
+        #     text1 = extract_text_doc(uploaded_file1)
         else:
             st.error("Unsupported file format. Please upload PDF or DOC files.")
         st.text_area("Content of Document 1", text1)
@@ -73,8 +74,8 @@ def main():
 
         if uploaded_file2.type == 'application/pdf':
             text2 = extract_text_pdf(uploaded_file2)
-        elif uploaded_file2.type in ['application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']:
-            text2 = extract_text_doc(uploaded_file2)
+        # elif uploaded_file2.type in ['application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']:
+        #     text2 = extract_text_doc(uploaded_file2)
         else:
             st.error("Unsupported file format. Please upload PDF or DOC files.")
         st.text_area("Content of Document 2", text2)
