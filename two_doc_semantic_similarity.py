@@ -56,8 +56,8 @@ def main():
     model = SentenceTransformer(model_name)
 
     # Upload documents
-    uploaded_file1 = st.file_uploader("Upload Document 1", type=["pdf", "doc", "docx"])
-    uploaded_file2 = st.file_uploader("Upload Document 2", type=["pdf", "doc", "docx"])
+    uploaded_file1 = st.file_uploader("Upload Document 1", type=["pdf"])
+    uploaded_file2 = st.file_uploader("Upload Document 2", type=["pdf"])
 
     print(uploaded_file1)
 
@@ -68,7 +68,7 @@ def main():
         # elif uploaded_file1.type in ['application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']:
         #     text1 = extract_text_doc(uploaded_file1)
         else:
-            st.error("Unsupported file format. Please upload PDF or DOC files.")
+            st.error("Unsupported file format. Please upload PDF files.")
         st.text_area("Content of Document 1", text1)
         embedding_doc1 = embed_text(text1, model)
 
@@ -77,7 +77,7 @@ def main():
         # elif uploaded_file2.type in ['application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']:
         #     text2 = extract_text_doc(uploaded_file2)
         else:
-            st.error("Unsupported file format. Please upload PDF or DOC files.")
+            st.error("Unsupported file format. Please upload PDF files.")
         st.text_area("Content of Document 2", text2)
         embedding_doc2 = embed_text(text2, model)
 
